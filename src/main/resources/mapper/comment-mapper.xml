@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nowcoder.community.dao.CommentMapper">
+
+    <sql id="selectFields">
+        id, user_id, entity_type, entity_id, target_id, content, status, create_time
+    </sql>
+
+    <sql id="insertFields">
+        user_id, entity_type, entity_id, target_id, content, status, create_time
+    </sql>
+
+    <!--升序排列，先评论的在前面。最新评论在末页-->
+    <select id="selectCommentsByEntity" resultType="Comment">
+        select <include refid="selectFields"></include>
+        from comment
+        where status = 0
+        and entity_type = #{entityType}
+        and entity_id = #{entityId}
+        order by create_time desc
+        limit #{offset}, #{limit}
+    </select>
+
+    <select id="selectCountByEntity" resultType="int">
+        select count(id)
+        from comment
+        where status = 0
+        and entity_type = #{entityType}
+        and entity_id = #{entityId}
+    </select>
+
+    <insert id="insertComment" parameterType="Comment" keyProperty="id">
+        insert into comment(<include refid="insertFields"></include>)
+        values(#{userId},#{entityType},#{entityId},#{targetId},#{content},#{status},#{createTime})
+    </insert>
+
+    <select id="selectCommentById" resultType="Comment">
+        select <include refid="selectFields"></include>
+        from comment
+        where id=#{id}
+    </select>
+
+    <select id="selectCommentCountById" resultType="int">
+        select count(id)
+        from comment
+        where status = 0
+        and user_id = #{id}
+        and entity_type=1
+    </select>
+
+    <select id="selectCommentsByUserId" resultType="Comment">
+        select <include refid="selectFields"></include>
+        from comment
+        where status = 0
+        and user_id=#{id}
+        and entity_type=1
+        order by create_time desc
+        limit #{offset}, #{limit}
+    </select>
+
+    <update id="updateStatus">
+        update comment set status = #{status} where entity_id = #{entityId} and entity_type=1
+    </update>
+
+</mapper>

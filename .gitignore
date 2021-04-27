@@ -1,0 +1,15 @@
+### IDEA ###
+.idea/
+*.iml
+*/target/
+target/
+*/*.iml
+*/.gradle/
+*/out/
+out/
+### Java ###
+.settings/
+.classpath
+.project
+bin/
+build/

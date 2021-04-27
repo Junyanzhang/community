@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="icon" th:href="@{/img/icon.png}"/>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+	<link rel="stylesheet" th:href="@{/css/global.css}" />
+	<link rel="stylesheet" th:href="@{/css/login.css}" />
+	<title>账号设置</title>
+</head>
+<body>
+	<div class="nk-container">
+		<!-- 头部 -->
+		<header class="bg-dark sticky-top" th:replace="index::header">
+
+		</header>
+
+		<!-- 内容 -->
+		<div class="main">
+			<div class="container p-5 mt-3 mb-3">
+				<!-- 上传头像 -->
+				<h6 class="text-left text-info border-bottom pb-2">上传头像</h6>
+				<!--上传到本地-->
+				<!--
+				<form class="mt-5" method="post" enctype="multipart/form-data" th:action="@{/user/upload}">
+					<div class="form-group row mt-4">
+						<label for="head-image" class="col-sm-2 col-form-label text-right">选择头像:</label>
+						<div class="col-sm-10">
+							<div class="custom-file">
+								<input type="file" th:class="|custom-file-input ${error!=null?'is-invalid':''}|"
+									   id="head-image" name="headerImage" lang="es" required="">
+								<label class="custom-file-label" for="head-image" data-browse="文件">选择一张图片</label>
+								<div class="invalid-feedback" th:text="${error}">
+									该账号不存在!
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group row mt-4">
+						<div class="col-sm-2"></div>
+						<div class="col-sm-10 text-center">
+							<button type="submit" class="btn btn-info text-white form-control">立即上传</button>
+						</div>
+					</div>
+				</form>
+				-->
+				<!--上传到七牛云-->
+				<form class="mt-5" id="uploadForm">
+					<div class="form-group row mt-4">
+						<label for="head-image" class="col-sm-2 col-form-label text-right">选择头像:</label>
+						<div class="col-sm-10">
+							<div class="custom-file">
+								<input type="hidden" name="token" th:value="${uploadToken}">
+								<input type="hidden" name="key" th:value="${fileName}">
+								<input type="file" class="custom-file-input" id="head-image" name="file" lang="es" required="">
+								<label class="custom-file-label" for="head-image" data-browse="文件">选择一张图片</label>
+								<div class="invalid-feedback">
+									该账号不存在!
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group row mt-4">
+						<div class="col-sm-2"></div>
+						<div class="col-sm-10 text-center">
+							<button type="submit" class="btn btn-info text-white form-control">立即上传</button>
+						</div>
+					</div>
+				</form>
+				<!-- 修改密码 -->
+				<h6 class="text-left text-info border-bottom pb-2 mt-5">修改密码</h6>
+				<form class="mt-5" method="post" enctype="multipart/form-data" th:action="@{/user/changePassword}">
+					<div class="form-group row mt-4">
+						<label for="old-password" class="col-sm-2 col-form-label text-right">原密码:</label>
+						<div class="col-sm-10">
+							<input type="password" th:class="|form-control ${oldPasswordMsg!=null?'is-invalid':''}|" id="old-password"
+								   name="oldPassword" placeholder="请输入原始密码!" required>
+							<div class="invalid-feedback" th:text="${oldPasswordMsg}">
+								密码长度不能小于8位!
+							</div>							
+						</div>
+					</div>
+					<div class="form-group row mt-4">
+						<label for="new-password" class="col-sm-2 col-form-label text-right">新密码:</label>
+						<div class="col-sm-10">
+							<input type="password" th:class="|form-control ${newPasswordMsg!=null?'is-invalid':''}|" id="new-password"
+								   name="newPassword" placeholder="请输入新的密码!" required>
+							<div class="invalid-feedback" th:text="${newPasswordMsg}">
+								密码长度不能小于8位!
+							</div>							
+						</div>
+					</div>
+					<div class="form-group row mt-4">
+						<label for="confirm-password" class="col-sm-2 col-form-label text-right">确认密码:</label>
+						<div class="col-sm-10">
+							<input type="password" th:class="|form-control ${confirmPasswordMsg!=null?'is-invalid':''}|" id="confirm-password"
+								   name="confirmPassword" placeholder="再次输入新密码!" required>
+							<div class="invalid-feedback" th:text="${confirmPasswordMsg}">
+								两次输入的密码不一致!
+							</div>								
+						</div>
+					</div>				
+					<div class="form-group row mt-4">
+						<div class="col-sm-2"></div>
+						<div class="col-sm-10 text-center">
+							<button type="submit" class="btn btn-info text-white form-control">立即保存</button>
+						</div>
+					</div>
+				</form>				
+			</div>
+		</div>
+
+		<!-- 尾部 -->
+		<footer class="bg-dark" th:replace="index::footer">
+
+		</footer>
+	</div>
+
+	<script src="https://s3.pstatp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js" crossorigin="anonymous"></script>
+	<script th:src="@{/js/global.js}"></script>
+	<script th:src="@{/js/setting.js}"></script>
+	<script>
+		$(function(){
+			bsCustomFileInput.init();
+		});
+	</script>
+</body>
+</html>
