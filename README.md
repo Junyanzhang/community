@@ -1,7 +1,7 @@
 # community
-<font face="黑体" >（价值1699元）Java高级工程师 - 高薪求职项目课</font>
+<font face="黑体" >社区类型后端项目，可用于本科毕业设计，校招或实习面试项目</font>
 
-牛客网高级后端项目，可用于本科毕业设计，校招或实习面试项目
+
 
 涉及到Spring、SpringMVC、Mybatis的整合，以及SpringBoot去简化Spring的配置开发
 
